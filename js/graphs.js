@@ -32,12 +32,14 @@ function newNode (x, y, lanes = 1) {
     'x': x,
     'y': y,
     'capacity': lanes * 2,
+    'stored': lanes * 2,
     'direction': [],
     'intersects': [],
     'relationships': [],
     'vehicules': [],
     'output': 0,
-    'input': 1
+    'input': 1,
+    target: circle
   }
   nodes.push(newNode)
 
