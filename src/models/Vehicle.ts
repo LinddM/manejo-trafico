@@ -26,3 +26,8 @@ export enum VehicleType {
   Bus,
   Truck,
 }
+
+function test(){
+  let vehi = new Vehicle(12, VehicleType.Bus)
+  document.getElementById('test').innerHTML = 'vergitas'
+}

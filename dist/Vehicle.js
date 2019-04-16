@@ -1,7 +1,14 @@
-"use strict";
-exports.__esModule = true;
-var Vehicle = /** @class */ (function () {
-    function Vehicle(id, type) {
+/**
+ * Vehicle class
+ * Defines size based on the Vehicle type
+ */
+export class Vehicle {
+    /**
+     *
+     * @param id Number
+     * @param type VehicleType defines the size, types: VehicleType.Car (1), VehicleType.Bus (2), VehicleType.Truck (2)
+     */
+    constructor(id, type) {
         this.id = id;
         if (type > 1) {
             this.size = 2;
@@ -10,12 +17,14 @@ var Vehicle = /** @class */ (function () {
             this.size = type;
         }
     }
-    return Vehicle;
-}());
-exports.Vehicle = Vehicle;
-var VehicleType;
+}
+export var VehicleType;
 (function (VehicleType) {
     VehicleType[VehicleType["Car"] = 0] = "Car";
     VehicleType[VehicleType["Bus"] = 1] = "Bus";
     VehicleType[VehicleType["Truck"] = 2] = "Truck";
-})(VehicleType = exports.VehicleType || (exports.VehicleType = {}));
+})(VehicleType || (VehicleType = {}));
+function test() {
+    let vehi = new Vehicle(12, VehicleType.Bus);
+    document.getElementById('test').innerHTML = 'vergitas';
+}
