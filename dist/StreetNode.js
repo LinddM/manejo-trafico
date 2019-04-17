@@ -16,4 +16,15 @@ class StreetNode {
       this.vehicles.push([])
     }
   }
+
+  addDirection (node) {
+    node.relationships.push(this)
+    this.direction.push(node)
+  }
+
+  removeNode (node, graph) {
+    node.direction[0].relationships = null
+    node.relationships[0].direction = null
+    graph.pop(node)
+  }
 }

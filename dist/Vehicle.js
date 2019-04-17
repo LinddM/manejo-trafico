@@ -42,6 +42,7 @@ class Vehicle {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 let vehicleTypes = [
   new Vehicle('car', 1, 3.2, 10),
   new Vehicle('motos', 1, 4.1, 20),
