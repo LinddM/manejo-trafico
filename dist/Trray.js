@@ -22,7 +22,7 @@ class Trray {
   }
 
   /**
-   * Functions that adds element to Trray
+   * Adds element to Trray
    * @param {TrrayNode} element - Node to add
    */
   addElement (element) {

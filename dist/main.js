@@ -1,21 +1,15 @@
 /* eslint-disable no-undef */
-let pastNode
-let graph = []
-let nodeToDelete
 
+let streets = new Streets()
+let lastNode
 for (let i = 0; i < 10; i++) {
-  const streetNode = new StreetNode(i, i, i, 2)
-  graph.push(streetNode)
+  streets.addStreetNode(i, i * 10, 5, 2)
+
   if (i > 0) {
-    pastNode.addDirection(graph[graph.length - 1])
+    streets.createRelationshipByNode(lastNode, streets.nodes[streets.nodes.length - 1])
   }
-  pastNode = streetNode
-  if (i === 3) {
-    nodeToDelete = streetNode
-  }
+
+  lastNode = streets.nodes[streets.nodes.length - 1]
 }
 
-// removing node #3
-nodeToDelete.removeNode(nodeToDelete, graph)
-
-console.log(graph)
+console.log(streets.nodes)

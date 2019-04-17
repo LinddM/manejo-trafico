@@ -24,7 +24,14 @@ class StreetNode extends TrrayNode {
 
 // eslint-disable-next-line no-undef
 class Streets extends Trray {
-  addElement (id, x, y, lanes) {
+  /**
+   * Adds StreetNode to Trray
+   * @param {number} id - ID of streetNode to add
+   * @param {number} x - Horizontal position of node in map
+   * @param {number} y - Vertical position of node in map
+   * @param {number} lanes - Number of lanes this point of the street has
+   */
+  addStreetNode (id, x, y, lanes) {
     const newElement = new StreetNode(id, x, y, lanes)
     this.nodes.push(newElement)
   }
