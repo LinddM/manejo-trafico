@@ -14,6 +14,17 @@ class TrrayNode {
     node.relationships.push(this)
     this.direction.push(node)
   }
+
+  removeDirection (node) {
+    const indexToRemove = this.direction.indexOf(node)
+    const relationshipIndex = node.relationships.indexOf(this)
+    if (indexToRemove > -1) {
+      this.direction.splice(indexToRemove, 1)
+      node.relationships.splice(relationshipIndex, 1)
+    } else {
+      throw new Error('Direction to remove is not part of node')
+    }
+  }
 }
 
 class Trray {
@@ -59,10 +70,54 @@ class Trray {
   }
 
   /**
+   * Unrelates two nodes, (a -x-> b)
+   * @param {TrrayNode} node - Node to be in the right side of the relationship
+   * @param {TrrayNode} nodeToRemove - Direction of relationship
+   */
+  removeRelationshipByNode (node, nodeToRemove) {
+    const index = this.nodes.indexOf(node)
+    const indexToRemove = this.nodes.indexOf(nodeToRemove)
+
+    if (index > -1 && indexToRemove > -1) {
+      this.nodes[index].removeDirection(this.nodes[indexToRemove])
+    } else {
+      throw new Error('Node(s) are not in Trray')
+    }
+  }
+
+  /**
+   * Unrelates two nodes in one direction, (a -x-> b)
+   * @param {TrrayNode} index - Index of node to be in the right side of the relationship
+   * @param {TrrayNode} indexToRemove - Index of node to be un related, direction of relationship
+   */
+  removeRelationshipByIndex (index, indexToRemove) {
+    if ((index > 0 && index < this.nodes.length) && (indexToRemove > 0 && indexToRemove < this.nodes.length)) {
+      this.nodes[index].removeDirection(this.nodes[indexToRemove])
+    } else {
+      throw new Error('Index of Node(s) are out of bounds of Trray')
+    }
+  }
+
+  /**
    * Returns the value of the first element in the Trray that equals element
    * @param {TrrayNode} element - Element to be compared
    */
   find (element) {
     return this.nodes.find(node => node === element)
+  }
+
+  removeElement (element) {
+    const index = this.nodes.indexOf(element)
+
+    if (index > -1) {
+      for (let i = 0; i < element.relationships.length; i++) {
+        element.relationships[i].removeDirection(element)
+      }
+      for (let i = 0; i < element.direction.length; i++) {
+        element.removeDirection(element.direction[i])
+      }
+    }
+
+    this.nodes.splice(index, 1)
   }
 }

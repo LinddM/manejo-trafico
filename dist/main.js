@@ -2,7 +2,8 @@
 
 let streets = new Streets()
 let lastNode
-for (let i = 0; i < 10; i++) {
+
+for (let i = 0; i < 5; i++) {
   streets.addStreetNode(i, i * 10, 5, 2)
 
   if (i > 0) {
