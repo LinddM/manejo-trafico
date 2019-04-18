@@ -29,8 +29,7 @@ class Vehicle {
             if (nextPosition.go) {
               if (this.speed < this.maxSpeed) {
                 this.speed += this.acceleration
-              }
-              else {
+              } else {
                 this.speed = this.maxSpeed
               }
             }
