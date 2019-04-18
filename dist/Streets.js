@@ -8,7 +8,10 @@ class StreetNode extends TrrayNode {
     // this.id = id
     super(id)
 
-    this.capacity = []
+    // eslint-disable-next-line no-undef
+    this.trafficLight = new TrafficLight()
+    this.load = []
+    this.capacity = 2
     this.intersects = []
     this.vehicles = []
     this.output = 1
@@ -16,7 +19,7 @@ class StreetNode extends TrrayNode {
     this.x = x
     this.y = y
     for (let i = 0; i < lanes; i++) {
-      this.capacity.push(2)
+      this.load.push(0)
       this.vehicles.push([])
     }
   }
