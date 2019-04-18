@@ -2,7 +2,7 @@
 
 // eslint-disable-next-line no-undef
 class StreetNode extends TrrayNode {
-  constructor (id, x, y, lanes) {
+  constructor (id, x, y, lanes, circle) {
     // this.direction = []
     // this.relationships = []
     // this.id = id
@@ -15,6 +15,7 @@ class StreetNode extends TrrayNode {
     this.input = 1
     this.x = x
     this.y = y
+    this.circle = circle
     for (let i = 0; i < lanes; i++) {
       this.capacity.push(2)
       this.vehicles.push([])
