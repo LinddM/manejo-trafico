@@ -3,20 +3,8 @@
 const canvas = document.getElementById('map')
 canvas.width = 800
 canvas.height = 500
-
 paper.setup(canvas)
-
-let background = new Path.Rectangle(new Rectangle(new Point(0, 0), new Point(800, 500)))
-background.fillColor = '#EEE'
-
-// Drawing of street
-background.onMouseDown = (event) => {
-  // If gray background is pressend and no node is selected then create a new node
-  if (!nodeSelected) {
-    newNode(event.point.x, event.point.y)
-    selectNode(streets.nodes[streets.nodes.length - 1].circle)
-  }
-}
+const tool = new Tool()
 
 // Trray structure for all street nodes
 let streets = new Streets()
@@ -30,6 +18,48 @@ let relationshipPath
 // Self-explaining, last circle that was selected
 // Useful to make the arrows between circles
 let lastNodeSelected
+
+let travel = 0
+let distance = 25
+
+let background = new Path.Rectangle(new Rectangle(new Point(0, 0), new Point(800, 500)))
+
+background.fillColor = '#EEE'
+
+// Drawing of street
+background.onMouseDown = (event) => {
+  // If gray background is pressed and no node is selected then create a new node
+  if (!nodeSelected) {
+    newNode(event.point.x, event.point.y)
+    selectNode(streets.nodes[streets.nodes.length - 1].circle)
+  }
+}
+
+background.onMouseDrag = (event) => {
+  travel += event.delta.length
+  if (travel > distance) {
+    newNode(event.point.x, event.point.y)
+    selectNode(streets.nodes[streets.nodes.length - 1].circle)
+    selectNode(streets.nodes[streets.nodes.length - 1].circle)
+    travel = 0
+  }
+}
+
+background.onMouseUp = (event) => {
+  unselectNode(streets.nodes[streets.nodes.length - 1].circle)
+}
+
+// Keyboard control
+
+tool.onKeyDown = (event) => {
+  console.log(event.key)
+  if (event.key === 'delete') {
+    if (nodeSelected) {
+      // console.log(lastNodeSelected)
+      deleteNode(lastNodeSelected.circle)
+    }
+  }
+}
 
 /**
  * Creates a circle in the canvas a new node in the streets model
@@ -85,8 +115,7 @@ function selectNode (target) {
     lastNodeSelected = thisNode
     nodeSelected = true
   } else if (target === lastNodeSelected.circle) {
-    // unselectNode(target)
-    nodeSelected = false
+    unselectNode(target)
   } else {
     relationshipPath.add(target.position)
 
@@ -134,5 +163,40 @@ function selectNode (target) {
     thisNode.intersects.push(relationshipPath)
 
     nodeSelected = false
+  }
+}
+
+/**
+ * Cancels the selection of a node
+ * @param {Path} target - Circle to unselect
+ */
+function unselectNode (target) {
+  if (nodeSelected) {
+    relationshipPath.remove()
+    target.fillColor = '#333'
+    nodeSelected = false
+  }
+}
+
+/**
+ * Deletes a node, its related relationships and strokes
+ * @param {Path} target - Node to unselect
+ */
+function deleteNode (target) {
+  const node = streets.nodes.find(node => node.circle === target)
+
+  for (let i = 0; i < node.intersects.length; i++) {
+    objs = project.activeLayer.children
+    const line = objs.find(obj => obj === node.intersects[i])
+    line.remove()
+  }
+
+  target.remove()
+
+  streets.removeIntersects(node)
+  streets.removeElement(node)
+  if (nodeSelected) {
+    nodeSelected = false
+    relationshipPath.remove()
   }
 }

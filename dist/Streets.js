@@ -35,4 +35,26 @@ class Streets extends Trray {
     const newElement = new StreetNode(id, x, y, lanes)
     this.nodes.push(newElement)
   }
+
+  removeIntersects (element) {
+    for (let i = 0; i < element.intersects.length; i++) {
+      // Comparar con dirección
+      for (let d = 0; d < element.direction.length; d++) {
+        for (let o = 0; o < element.direction[d].intersects.length; o++) {
+          if (element.intersects[i] === element.direction[d].intersects[o]) {
+            element.direction[d].intersects.splice(o, 1)
+          }
+        }
+      }
+
+      // Comparar con relación
+      for (let r = 0; r < element.relationships.length; r++) {
+        for (let o = 0; o < element.relationships[r].intersects.length; o++) {
+          if (element.intersects[i] === element.relationships[r].intersects[o]) {
+            element.relationships[r].intersects.splice(o, 1)
+          }
+        }
+      }
+    }
+  }
 }
