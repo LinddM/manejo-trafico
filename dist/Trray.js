@@ -116,8 +116,9 @@ class Trray {
       for (let i = 0; i < element.direction.length; i++) {
         element.removeDirection(element.direction[i])
       }
+      this.nodes.splice(index, 1)
+    } else {
+      throw new Error('Node is not in Trray')
     }
-
-    this.nodes.splice(index, 1)
   }
 }
