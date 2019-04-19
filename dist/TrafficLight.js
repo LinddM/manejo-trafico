@@ -6,4 +6,13 @@ class TrafficLight {
     // go: represents red (false) or green (true)
     this.go = true
   }
+  makeVehiclesMove () {
+    if (this.go) {
+      this.go = false
+    } else {
+      this.go = true
+    }
+    console.log(this.go)
+    setTimeout(this.makeVehiclesMove, 500)
+  }
 }
