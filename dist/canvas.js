@@ -12,9 +12,6 @@ let streets = new Streets()
 // Checks if any circle is selected on the canvas
 let nodeSelected = false
 
-// Arrows that point from one circle to another
-let relationshipPath
-
 // Self-explaining, last circle that was selected
 // Useful to make the arrows between circles
 let lastNodeSelected
@@ -25,6 +22,9 @@ let distance = 25
 let background = new Path.Rectangle(new Rectangle(new Point(0, 0), new Point(800, 500)))
 
 background.fillColor = '#EEE'
+
+// Arrows that point from one circle to another
+let relationshipPath
 
 // Drawing of street
 background.onMouseDown = (event) => {
@@ -105,20 +105,18 @@ function selectNode (target) {
 
     relationshipPath = new Path()
     relationshipPath.strokeColor = '#333'
-    relationshipPath.strokeWidth = thisNode.capacity[0] / 2 + 2
+    relationshipPath.strokeWidth = thisNode.capacity / 2 + 2
     relationshipPath.strokeCap = 'round'
     relationshipPath.strokeJoin = 'round'
     relationshipPath.add(target.position)
 
-    target.fillColor = 'red'
-
     lastNodeSelected = thisNode
+    target.fillColor = 'red'
     nodeSelected = true
   } else if (target === lastNodeSelected.circle) {
     unselectNode(target)
   } else {
     relationshipPath.add(target.position)
-
     const point = {
       x: lastNodeSelected.x - target.position.x,
       y: target.position.y - lastNodeSelected.y
