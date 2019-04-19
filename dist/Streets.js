@@ -13,14 +13,14 @@ class StreetNode extends TrrayNode {
     this.load = []
     this.capacity = 2
     this.intersects = []
-    this.vehicles = []
+    this.lanes = []
     this.output = 1
     this.input = 1
     this.x = x
     this.y = y
     for (let i = 0; i < lanes; i++) {
       this.load.push(0)
-      this.vehicles.push([])
+      this.lanes.push([])
     }
   }
 }
