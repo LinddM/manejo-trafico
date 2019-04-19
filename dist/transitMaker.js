@@ -1,16 +1,14 @@
 /* eslint-disable no-undef */
-let vehicles = []
 
 // eslint-disable-next-line no-unused-vars
 function addVehicle (nodeToAddVehicle) {
   type = Math.floor(Math.random() * vehicleTypes.length)
   const newVehicle = new Vehicle(vehicleTypes[type])
-  newVehicle.currentPosition = nodeToAddVehicle
-  newVehicle.insertIntoNode(nodeToAddVehicle)
-
-  vehicles.push(newVehicle)
-  console.log(newVehicle)
-  newVehicle.move()
+  try {
+    newVehicle.insertIntoNode(nodeToAddVehicle)
+    newVehicle.currentPosition = nodeToAddVehicle
+    newVehicle.move()
+  } catch (error) {}
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -26,8 +24,7 @@ function insertMotorcycle () {
   const newVehicle = new Vehicle(vehicleTypes[1])
   newVehicle.currentPosition = nodeToAddVehicle
   newVehicle.insertIntoNode(nodeToAddVehicle)
-
-  vehicles.push(newVehicle)
+  
   console.log(newVehicle)
   newVehicle.move()
 }
@@ -38,7 +35,12 @@ function insertTruck () {
   newVehicle.currentPosition = nodeToAddVehicle
   newVehicle.insertIntoNode(nodeToAddVehicle)
 
-  vehicles.push(newVehicle)
   console.log(newVehicle)
   newVehicle.move()
+}
+
+async function wait (ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
 }

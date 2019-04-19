@@ -16,23 +16,30 @@ class Vehicle {
   }
 
   insertIntoNode (element) {
+    let optimal = { load: 10, index: 0 }
     for (let i = 0; i < element.lanes.length; i++) {
       if ((element.load[i] + this.size) <= element.capacity) {
-        element.lanes[i].push(this)
-        element.load[i] += this.size
-      } else {
-        throw new Error('Node is already full')
+        if (element.load[i] < optimal.load) {
+          optimal = { load: element.load[i], index: i }
+        }
       }
+    }
+
+    if (optimal.load < 10) {
+      element.lanes[optimal.index].push(this)
+      element.load[optimal.index] += this.size
+    } else {
+      throw new Error('Node is already full')
     }
   }
 
   async move () {
     let restart = true
-    while (restart) {
+    while (restart && sim) {
       for (let i = 0; i < this.currentPosition.lanes.length; i++) {
         const lane = this.currentPosition.lanes[i]
         if (lane.indexOf(this) === 0) {
-          while (this.currentPosition.direction.length > 0) {
+          while (this.currentPosition.direction.length > 0 && sim) {
           // restart = true
           // Defines next node to move and speed of movement
             let nextPosition = this.currentPosition.direction[Math.floor(Math.random() * this.currentPosition.direction.length)]
@@ -58,13 +65,14 @@ class Vehicle {
                   this.currentPosition.load[i] -= this.size
                   this.currentPosition = nextPosition
 
+                  const arrSum = arr => arr.reduce((a, b) => a + b, 0)
+
+                  const weight = (arrSum(this.currentPosition.load) / (this.currentPosition.lanes.length * 2))
                   // eslint-disable-next-line no-undef
-                  this.currentPosition.circle.fillColor = new Color(0, 0.3, 0.5, 0.7)
+                  this.currentPosition.circle.fillColor = new Color(0, 0.3, 0.5, weight)
                   // eslint-disable-next-line no-undef
                   lastNode.circle.fillColor = new Color(0, 0.8, 1, 0.7)
-                } catch (error) {
-                  console.log('caca')
-                }
+                } catch (error) {}
               }, time)
               await wait(time + 1)
             }

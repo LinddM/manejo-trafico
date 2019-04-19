@@ -30,7 +30,7 @@ let relationshipPath
 background.onMouseDown = (event) => {
   // If gray background is pressed and no node is selected then create a new node
   if (!nodeSelected) {
-    newNode(event.point.x, event.point.y)
+    newNode(event.point.x, event.point.y, document.getElementById('lanes').value)
     selectNode(streets.nodes[streets.nodes.length - 1].circle)
   }
 }
@@ -38,7 +38,7 @@ background.onMouseDown = (event) => {
 background.onMouseDrag = (event) => {
   travel += event.delta.length
   if (travel > distance) {
-    newNode(event.point.x, event.point.y)
+    newNode(event.point.x, event.point.y, document.getElementById('lanes').value)
     selectNode(streets.nodes[streets.nodes.length - 1].circle)
     selectNode(streets.nodes[streets.nodes.length - 1].circle)
     travel = 0
@@ -52,7 +52,6 @@ background.onMouseUp = (event) => {
 // Keyboard control
 
 tool.onKeyDown = (event) => {
-  console.log(event.key)
   if (event.key === 'delete') {
     if (nodeSelected) {
       // console.log(lastNodeSelected)
@@ -105,7 +104,7 @@ function selectNode (target) {
 
     relationshipPath = new Path()
     relationshipPath.strokeColor = '#333'
-    relationshipPath.strokeWidth = thisNode.capacity / 2 + 2
+    relationshipPath.strokeWidth = thisNode.lanes.length / 2 + 2
     relationshipPath.strokeCap = 'round'
     relationshipPath.strokeJoin = 'round'
     relationshipPath.add(target.position)
