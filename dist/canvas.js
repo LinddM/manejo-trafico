@@ -93,7 +93,7 @@ function newNode (x, y, lanes = 1) {
 
 /**
  * Selects a circle and creates relationships between nodes
- * An arrow in the canvas is created with the relantionship between StreetNodes
+ * An arrow in the canvas is created with the relationship between StreetNodes
  * @param {Path} target Circle path that is been selected
  */
 function selectNode (target) {

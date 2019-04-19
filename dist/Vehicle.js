@@ -1,7 +1,4 @@
-/**
- * Vehicle class
- * Defines size based on the Vehicle type
- */
+// eslint-disable-next-line no-unused-vars
 class Vehicle {
   /**
    *
@@ -10,12 +7,12 @@ class Vehicle {
    * @param maxSpeed - Topspeed of vehicle
    * @param acceleration - Acceleration of vehicle
    */
-  constructor (id, size, maxSpeed, acceleration) {
+  constructor (typeConfig = TypeConfiguration) {
     this.speed = 0
-    this.id = id
-    this.size = size
-    this.maxSpeed = maxSpeed
-    this.acceleration = acceleration
+    this.description = typeConfig.description
+    this.size = typeConfig.size
+    this.maxSpeed = typeConfig.maxSpeed
+    this.acceleration = typeConfig.acceleration
   }
 
   insertIntoNode (element) {
@@ -29,17 +26,17 @@ class Vehicle {
     }
   }
 
-  move () {
-    let restart = false
-    console.log('CURRENT LANES', this.currentPosition.lanes.length)
-    for (let i = 0; i < this.currentPosition.lanes.length; i++) {
-      const lane = this.currentPosition.lanes[i]
-      if (lane.indexOf(this) === 0) {
-        if (this.currentPosition.direction.length > 0) {
-        // Defines next node to move and speed of movement
-          let nextPosition = this.currentPosition.direction[Math.floor(Math.random() * this.currentPosition.direction.length)]
+  async move () {
+    let restart = true
+    while (restart) {
+      for (let i = 0; i < this.currentPosition.lanes.length; i++) {
+        const lane = this.currentPosition.lanes[i]
+        if (lane.indexOf(this) === 0) {
+          while (this.currentPosition.direction.length > 0) {
+          // restart = true
+          // Defines next node to move and speed of movement
+            let nextPosition = this.currentPosition.direction[Math.floor(Math.random() * this.currentPosition.direction.length)]
 
-          try {
             if (nextPosition.trafficLight.state && !nextPosition.trafficLight.go) {
               this.speed = 0
             } else {
@@ -52,37 +49,64 @@ class Vehicle {
               // eslint-disable-next-line no-undef
               const time = ((distance / this.speed) * timeFrame) * 1000
               // not sure if assignment is well done
-              console.log('CURRENT:', this.currentPosition.x, this.currentPosition.y)
               setTimeout(() => {
-                this.insertIntoNode(nextPosition)
-                this.currentPosition.lanes[i].splice(0, 1)
-                this.currentPosition.load[i] -= this.size
-                this.currentPosition = nextPosition
+                const lastNode = this.currentPosition
 
-                console.log('MOVED  :', this.currentPosition.x, this.currentPosition.y)
-                this.move()
+                try {
+                  this.insertIntoNode(nextPosition)
+                  this.currentPosition.lanes[i].splice(0, 1)
+                  this.currentPosition.load[i] -= this.size
+                  this.currentPosition = nextPosition
+
+                  // eslint-disable-next-line no-undef
+                  this.currentPosition.circle.fillColor = new Color(0, 0.3, 0.5, 0.7)
+                  // eslint-disable-next-line no-undef
+                  lastNode.circle.fillColor = new Color(0, 0.8, 1, 0.7)
+                } catch (error) {
+                  console.log('caca')
+                }
               }, time)
+              await wait(time + 1)
             }
-          } catch (error) {
-            console.log(error)
-            restart = true
           }
+          this.currentPosition.lanes[i].splice(0, 1)
+          this.currentPosition.load[i] -= this.size
+          // eslint-disable-next-line no-undef
+          this.currentPosition.circle.fillColor = new Color(0, 0.8, 1, 0.7)
+
+          restart = false
         }
-      } else {
-        restart = true
       }
     }
+  }
+}
 
-    if (restart) {
-      setTimeout(this.move, 600)
-    }
+class TypeConfiguration {
+  /**
+   *
+   * @param description - Description of new vehicle configuration
+   * @param size - Units of load vehicles occupies
+   * @param maxSpeed - Topspeed of vehicle
+   * @param acceleration - Acceleration of vehicle
+   */
+  constructor (description, size, maxSpeed, acceleration) {
+    this.description = description
+    this.size = size
+    this.maxSpeed = maxSpeed
+    this.acceleration = acceleration
   }
 }
 
 // eslint-disable-next-line no-unused-vars
 let vehicleTypes = [
-  new Vehicle('car', 1, 27, 12.04),
-  new Vehicle('motos', 1, 42, 15.6),
-  new Vehicle('buses', 2, 27, 6.5),
-  new Vehicle('truck', 2, 20, 6)
+  new TypeConfiguration('car', 1, 27, 12.04),
+  new TypeConfiguration('motos', 1, 42, 15.6),
+  new TypeConfiguration('buses', 2, 27, 6.5),
+  new TypeConfiguration('truck', 2, 20, 6)
 ]
+
+async function wait (ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
+}
