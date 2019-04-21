@@ -8,7 +8,7 @@ class Vehicle {
    * @param acceleration - Acceleration of vehicle
    */
   constructor (typeConfig = TypeConfiguration) {
-    this.speed = 0
+    this.speed = typeConfig.maxSpeed
     this.description = typeConfig.description
     this.size = typeConfig.size
     this.maxSpeed = typeConfig.maxSpeed
@@ -28,6 +28,7 @@ class Vehicle {
     if (optimal.load < 10) {
       element.lanes[optimal.index].push(this)
       element.load[optimal.index] += this.size
+      return optimal.index
     } else {
       throw new Error('Node is already full')
     }
@@ -35,22 +36,26 @@ class Vehicle {
 
   async move () {
     let restart = true
+    // eslint-disable-next-line no-undef
     while (restart && sim) {
       for (let i = 0; i < this.currentPosition.lanes.length; i++) {
         const lane = this.currentPosition.lanes[i]
         if (lane.indexOf(this) === 0) {
+          // eslint-disable-next-line no-undef
           while (this.currentPosition.direction.length > 0 && sim) {
           // restart = true
           // Defines next node to move and speed of movement
             let nextPosition = this.currentPosition.direction[Math.floor(Math.random() * this.currentPosition.direction.length)]
 
-            if (nextPosition.trafficLight.state && !nextPosition.trafficLight.go) {
+            if (!nextPosition.trafficLight.go) {
               this.speed = 0
+              // eslint-disable-next-line no-undef
+              await wait(500 * timeFrame)
             } else {
-              if (this.speed < this.maxSpeed) {
+              if (this.speed < (this.maxSpeed + this.currentPosition.lanes.length * 2)) {
                 this.speed += this.acceleration
               } else {
-                this.speed = this.maxSpeed
+                this.speed = (this.maxSpeed + this.currentPosition.lanes.length * 2)
               }
               const distance = (Math.sqrt(Math.pow(this.currentPosition.x - nextPosition.x, 2) + Math.pow(this.currentPosition.y - nextPosition.y, 2))) / 10
               // eslint-disable-next-line no-undef
@@ -60,21 +65,24 @@ class Vehicle {
                 const lastNode = this.currentPosition
 
                 try {
-                  this.insertIntoNode(nextPosition)
+                  const index = this.insertIntoNode(nextPosition)
                   this.currentPosition.lanes[i].splice(0, 1)
                   this.currentPosition.load[i] -= this.size
                   this.currentPosition = nextPosition
+                  i = index
 
                   const arrSum = arr => arr.reduce((a, b) => a + b, 0)
 
                   const weight = (arrSum(this.currentPosition.load) / (this.currentPosition.lanes.length * 2))
                   // eslint-disable-next-line no-undef
-                  this.currentPosition.circle.fillColor = new Color(0, 0.3, 0.5, weight)
+                  this.currentPosition.circle.fillColor = new Color(weight, 0.66 - (weight * 0.66), 1 - weight, 0.7)
                   // eslint-disable-next-line no-undef
-                  lastNode.circle.fillColor = new Color(0, 0.8, 1, 0.7)
-                } catch (error) {}
+                  lastNode.circle.fillColor = new Color(0, 0.66, 1, 0.7)
+                } catch (error) {
+                  this.speed = 0
+                }
               }, time)
-              await wait(time + 1)
+              await wait(time)
             }
           }
           this.currentPosition.lanes[i].splice(0, 1)
@@ -83,6 +91,9 @@ class Vehicle {
           this.currentPosition.circle.fillColor = new Color(0, 0.8, 1, 0.7)
 
           restart = false
+        } else {
+          // eslint-disable-next-line no-undef
+          await wait(500 * timeFrame)
         }
       }
     }
@@ -107,14 +118,15 @@ class TypeConfiguration {
 
 // eslint-disable-next-line no-unused-vars
 let vehicleTypes = [
-  new TypeConfiguration('car', 1, 27, 12.04),
-  new TypeConfiguration('motos', 1, 42, 15.6),
-  new TypeConfiguration('buses', 2, 27, 6.5),
-  new TypeConfiguration('truck', 2, 20, 6)
+  new TypeConfiguration('car', 1, 14, 8.02),
+  new TypeConfiguration('motos', 1, 16, 10),
+  new TypeConfiguration('buses', 2, 11, 4.3),
+  new TypeConfiguration('truck', 2, 12, 4)
 ]
 
 async function wait (ms) {
   return new Promise(resolve => {
-    setTimeout(resolve, ms)
+    // eslint-disable-next-line no-undef
+    setTimeout(resolve, ms * timeFrame)
   })
 }

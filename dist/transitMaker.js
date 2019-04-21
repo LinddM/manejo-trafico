@@ -1,14 +1,12 @@
 /* eslint-disable no-undef */
 
 // eslint-disable-next-line no-unused-vars
-function addVehicle (nodeToAddVehicle) {
-  type = Math.floor(Math.random() * vehicleTypes.length)
-  const newVehicle = new Vehicle(vehicleTypes[type])
+function addVehicle (nodeToAddVehicle = StreetNode) {
+  const type = Math.floor(Math.random() * vehicleTypes.length)
   try {
-    newVehicle.insertIntoNode(nodeToAddVehicle)
-    newVehicle.currentPosition = nodeToAddVehicle
-    newVehicle.move()
-  } catch (error) {}
+    nodeToAddVehicle.generateVehicle(vehicleTypes[type])
+  } catch (error) {
+  }
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -21,26 +19,29 @@ function generateVehicle () {
 
 function insertMotorcycle () {
   const nodeToAddVehicle = streets.nodes.find(node => node.relationships.length === 0)
-  const newVehicle = new Vehicle(vehicleTypes[1])
-  newVehicle.currentPosition = nodeToAddVehicle
-  newVehicle.insertIntoNode(nodeToAddVehicle)
-  
-  console.log(newVehicle)
-  newVehicle.move()
+  try {
+    nodeToAddVehicle.generateVehicle(vehicleTypes[1])
+    console.log(vehicleTypes[1])
+  } catch (error) {
+  }
 }
 
 function insertTruck () {
   const nodeToAddVehicle = streets.nodes.find(node => node.relationships.length === 0)
-  const newVehicle = new Vehicle(vehicleTypes[3])
-  newVehicle.currentPosition = nodeToAddVehicle
-  newVehicle.insertIntoNode(nodeToAddVehicle)
-
-  console.log(newVehicle)
-  newVehicle.move()
+  try {
+    nodeToAddVehicle.generateVehicle(vehicleTypes[3])
+    console.log(vehicleTypes[3])
+  } catch (error) {
+  }
 }
 
 async function wait (ms) {
   return new Promise(resolve => {
     setTimeout(resolve, ms)
   })
+}
+
+function addTrafficLight () {
+  lastNodeSelected.trafficLight.state = true
+  lastNodeSelected.trafficLight.makeVehiclesMove()
 }
