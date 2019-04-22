@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Simulador de transito - PRUEBA</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
     <script type="text/javascript" src="js/paper/paper-full.min.js"></script>
     <script type="text/javascript" src="js/paper/paper-core.min.js"></script>
@@ -22,9 +23,6 @@
 
     <br><br>
     <button onclick="generateVehicle()">Generar vehiculos</button>
-    <br><br>
-    <button onclick="insertMotorcycle()">Generar moto</button>
-    <button onclick="insertTruck()">Generar camion</button>
 
     <script>
         function simSwitch(obj){
@@ -33,12 +31,10 @@
         }
     </script>
 
-    <br><br>
     <input id="timeframe" min="1" max="10" value="1" type="number" placeholder="Velocidad">
     <button onclick="timeFrame = document.getElementById('timeframe').value">Fijar velocidad</button>
     <button onclick="simSwitch(this)">Sim true</button>
 
-    <br><br>
     <button onclick="addTrafficLight()">Agregar semaforo</button>
     <script src="dist/Trray.js"></script>
     <script src="dist/TrafficLight.js"></script>
