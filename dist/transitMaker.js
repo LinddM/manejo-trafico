@@ -17,31 +17,25 @@ function generateVehicle () {
   }
 }
 
-function insertMotorcycle () {
-  const nodeToAddVehicle = streets.nodes.find(node => node.relationships.length === 0)
-  try {
-    nodeToAddVehicle.generateVehicle(vehicleTypes[1])
-    console.log(vehicleTypes[1])
-  } catch (error) {
-  }
-}
+function autoGenerate() {
+  const generationSpeed = 3000 - document.getElementById('vehicleGenerationRange').value
+  console.log(generationSpeed)
 
-function insertTruck () {
-  const nodeToAddVehicle = streets.nodes.find(node => node.relationships.length === 0)
-  try {
-    nodeToAddVehicle.generateVehicle(vehicleTypes[3])
-    console.log(vehicleTypes[3])
-  } catch (error) {
-  }
-}
+  lastNodeSelected.live = !lastNodeSelected.live
+  lastNodeSelected.autoGenerate(generationSpeed)
 
-async function wait (ms) {
-  return new Promise(resolve => {
-    setTimeout(resolve, ms)
-  })
+  fillProperties()
+  if (nodeSelected) {
+    unselectNode(lastNodeSelected)
+  }
 }
 
 function addTrafficLight () {
-  lastNodeSelected.trafficLight.state = true
+  lastNodeSelected.trafficLight.state = !lastNodeSelected.trafficLight.state
   lastNodeSelected.trafficLight.makeVehiclesMove()
+  fillProperties()
+
+  if (nodeSelected) {
+    unselectNode(lastNodeSelected)
+  }
 }

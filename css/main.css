@@ -31,15 +31,15 @@ button {
   padding: 15px 20px 15px 20px;
   border: none;
   border-radius: 10px;
-  background-color: #1A73E8;
+  background-color: #D6D6D6;
+  border: solid 1px #D6D6D6;
+  color: #222222;
   /*background: linear-gradient(180deg, rgba(51,134,175,1) 0%, rgba(51,134,175,0.95) 59%, rgba(51,134,175,0.85) 88%, rgba(51,134,175,0.70) 100%);*/
   transition: all .3s;
   cursor: pointer;
-  color: white;
   font-size: 15px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  border: solid 1px #0070C9;
   margin: 5px;
 }
 
@@ -81,3 +81,61 @@ input:focus, textarea:focus{
   margin: 2px;
 }
 
+.primary {
+  background-color: #1A73E8;
+  border: solid 1px #0070C9;
+  color: white;
+}
+
+.danger {
+  background-color: red;
+  border: solid 1px #f73434;
+  color: white;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  background-color: #D6D6D6;
+  width: 200px;
+  height:20px;
+  transform: translateY(14px)
+}
+
+input[type="range"]::-webkit-slider-thumb {
+   -webkit-appearance: none;
+  background-color: #666;
+  opacity: 0.5;
+  width: 10px;
+  height: 26px;
+  border-radius: 4px;
+}
+
+input[type="range"]:active {
+  background-color: white;
+}
+
+.info-box {
+  position: fixed;
+  left: 30px;
+  top: 50%;
+  width: 250px;
+
+  transform: translateY(-85%);
+  background-color: #EEE;
+  padding: 20px;
+  box-shadow: 0 1px 2px 1px rgba(0,0,0,.1);
+}
+
+.info-box ul {
+  text-align: left;
+}
+
+.properties-table {
+  margin: auto;
+  border-collapse: collapse;
+}
+
+.properties-table td, .properties-table th{
+  border-bottom: 1px solid #bbb;
+  padding: 8px;
+}

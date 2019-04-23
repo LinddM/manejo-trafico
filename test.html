@@ -15,32 +15,81 @@
 </head>
 
 <body>
-    <input id="lanes" min="1" max="10" value="1" type="number" placeholder="Carriles">
+    <div class="info-box">
+        <button onclick="fillProperties()">🔁</button>
+        <table class="properties-table">
+            <tr>
+                <th>
+                    Propiedad
+                </th>
+                <th>
+                    Valor
+                </th>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td id="prop-id"></td>
+            </tr>
+            <tr>
+                <td>x</td>
+                <td id="prop-x"></td>
+            </tr>
+            <tr>
+                <td>y</td>
+                <td id="prop-y"></td>
+            </tr>
+            <tr>
+                <td>carriles</td>
+                <td id="prop-lanes"></td>
+            </tr>
+            <tr>
+                <td>carga</td>
+                <td id="prop-load"></td>
+            </tr>
+            <tr>
+                <td>semaforo</td>
+                <td id="prop-traffilight"></td>
+            </tr>
+
+            <tr>
+                <td>auto-generación</td>
+                <td id="prop-live"></td>
+            </tr>
+        </table>
+    </div>
+
+    <span>Carriles: </span>
+    <input min="1" max="10" value="2" id="lanes" type="range">
     <br><br>
     <!-- CANVAS AQUI -->
     <canvas oncontextmenu="return false;" id="map"></canvas>
     <!-- CANVAS AQUI -->
 
     <br><br>
-    <button onclick="generateVehicle()">Generar vehiculos</button>
+    <input min="0" max="2600" value="2000" id="vehicleGenerationRange" type="range">
+    <button id="auto-generate" onclick="autoGenerate()">🚙</button>
 
     <script>
         function simSwitch(obj){
             sim = !sim
-            obj.innerHTML = `SIM ${sim}`
+            if (sim){
+                obj.innerHTML = `🛑`
+            } else {
+                obj.innerHTML = `▶`
+            }
         }
     </script>
 
     <span class="verticalLines"></span>
-    <input id="timeframe" min="1" max="10" value="1" type="number" placeholder="Velocidad">
-    <button onclick="timeFrame = document.getElementById('timeframe').value">Fijar velocidad</button>
+    <input style="margin-right: -10px; border-top-right-radius: 0; border-bottom-right-radius: 0; transform: translateY(2px);" id="timeframe" min="1" max="10" value="1" type="number" placeholder="Velocidad">
+    <button style="margin-left: -2px; transform: translateX(0)" class="primary" onclick="timeFrame = document.getElementById('timeframe').value">Fijar velocidad</button>
     <span class="verticalLines"></span>
     
-    <button onclick="simSwitch(this)">Sim true</button>
+    <button class="danger" onclick="simSwitch(this)">🛑</button>
 
     <span class="verticalLines"></span>
 
-    <button onclick="addTrafficLight()">Agregar semaforo</button>
+    <button id="traffic-light" onclick="addTrafficLight()">🚦</button>
 
     <script src="dist/Trray.js"></script>
     <script src="dist/TrafficLight.js"></script>

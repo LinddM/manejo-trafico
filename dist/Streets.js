@@ -18,6 +18,7 @@ class StreetNode extends TrrayNode {
     this.input = 1
     this.x = x
     this.y = y
+    this.live = false
     for (let i = 0; i < lanes; i++) {
       this.load.push(0)
       this.lanes.push([])

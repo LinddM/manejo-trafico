@@ -112,6 +112,8 @@ function selectNode (target) {
     lastNodeSelected = thisNode
     target.fillColor = 'red'
     nodeSelected = true
+
+    fillProperties()
   } else if (target === lastNodeSelected.circle) {
     unselectNode(target)
   } else {
@@ -195,5 +197,27 @@ function deleteNode (target) {
   if (nodeSelected) {
     nodeSelected = false
     relationshipPath.remove()
+  }
+}
+
+function fillProperties () {
+  document.getElementById('prop-id').innerHTML = lastNodeSelected.id
+  document.getElementById('prop-x').innerHTML = lastNodeSelected.x
+  document.getElementById('prop-y').innerHTML = lastNodeSelected.y
+  document.getElementById('prop-lanes').innerHTML = lastNodeSelected.lanes.length
+  document.getElementById('prop-load').innerHTML = JSON.stringify(lastNodeSelected.load)
+  document.getElementById('prop-traffilight').innerHTML = lastNodeSelected.trafficLight.state
+  document.getElementById('prop-live').innerHTML = lastNodeSelected.live
+
+  if (lastNodeSelected.live) {
+    document.getElementById('auto-generate').classList.add('primary')
+  } else {
+    document.getElementById('auto-generate').classList.remove('primary')
+  }
+
+  if (lastNodeSelected.trafficLight.state) {
+    document.getElementById('traffic-light').classList.add('primary')
+  } else {
+    document.getElementById('traffic-light').classList.remove('primary')
   }
 }
