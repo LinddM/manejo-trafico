@@ -8,9 +8,9 @@ var carsQuantity = 0
 var historic = []
 
 // eslint-disable-next-line no-undef
-var circulationLabel = new PointText(new Point(200, 50))
+var circulationLabel = new PointText(new Point(10, 20))
 // eslint-disable-next-line no-undef
-var averageExitLabel = new PointText(new Point(200, 300))
+var averageExitLabel = new PointText(new Point(795, 20))
 
 function arrivalsAndDepartures () {
   setTimeout(() => {
@@ -31,7 +31,7 @@ arrivalsAndDepartures()
 
 function exitAverageTimes () {
   setTimeout(() => {
-    averageExitLabel.justification = 'left'
+    averageExitLabel.justification = 'right'
     averageExitLabel.fillColor = 'black'
 
     averageExitLabel.content = `Tiempo promedio del sistema: ${Math.floor(exitTimes / carsQuantity)}ms`
