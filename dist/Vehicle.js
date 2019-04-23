@@ -75,10 +75,17 @@ class Vehicle {
                   const arrSum = arr => arr.reduce((a, b) => a + b, 0)
 
                   const weight = (arrSum(this.currentPosition.load) / (this.currentPosition.lanes.length * 2))
+
                   // eslint-disable-next-line no-undef
-                  this.currentPosition.circle.fillColor = new Color(weight, 0.66 - (weight * 0.66), 1 - weight, 0.7)
+                  if (this.currentPosition !== lastNodeSelected || !nodeSelected) {
+                    // eslint-disable-next-line no-undef
+                    this.currentPosition.circle.fillColor = new Color(weight, 0.66 - (weight * 0.66), 1 - weight, 0.7)
+                  }
                   // eslint-disable-next-line no-undef
-                  lastNode.circle.fillColor = new Color(0, 0.66, 1, 0.7)
+                  if (lastNode !== lastNodeSelected || !nodeSelected) {
+                    // eslint-disable-next-line no-undef
+                    lastNode.circle.fillColor = new Color(0, 0.66, 1, 0.7)
+                  }
                 } catch (error) {
                   this.speed = 0
                 }
@@ -88,9 +95,12 @@ class Vehicle {
           }
           this.currentPosition.lanes[i].splice(0, 1)
           this.currentPosition.load[i] -= this.size
-          // eslint-disable-next-line no-undef
-          this.currentPosition.circle.fillColor = new Color(0, 0.8, 1, 0.7)
 
+          // eslint-disable-next-line no-undef
+          if (this.currentPosition !== lastNodeSelected || !nodeSelected) {
+            // eslint-disable-next-line no-undef
+            this.currentPosition.circle.fillColor = new Color(0, 0.8, 1, 0.7)
+          }
           // eslint-disable-next-line no-undef
           departures += 1
           let departTime = new Date()
