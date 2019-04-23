@@ -4,6 +4,7 @@ class TrrayNode {
     this.relationships = []
     this.direction = []
     this.id = id
+    this.live = true
   }
 
   /**
@@ -117,6 +118,8 @@ class Trray {
         element.removeDirection(element.direction[i])
       }
       this.nodes.splice(index, 1)
+
+      element.live = false
     } else {
       throw new Error('Node is not in Trray')
     }

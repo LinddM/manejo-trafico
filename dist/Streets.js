@@ -32,6 +32,7 @@ class StreetNode extends TrrayNode {
       newVehicle.insertIntoNode(this)
       newVehicle.currentPosition = this
       newVehicle.move()
+      // eslint-disable-next-line no-undef
     } catch (error) {
       console.log(error)
     }
@@ -40,9 +41,10 @@ class StreetNode extends TrrayNode {
   autoGenerate (ms) {
     let x = 0
     setTimeout(() => {
+      arrivals += 1
       const type = Math.floor(Math.random() * vehicleTypes.length)
       this.generateVehicle(vehicleTypes[type])
-      if (sim) {
+      if (sim && this.live) {
         this.autoGenerate(ms)
       }
     // eslint-disable-next-line no-undef

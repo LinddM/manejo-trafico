@@ -36,6 +36,7 @@ class Vehicle {
 
   async move () {
     let restart = true
+    let startTime = new Date()
     // eslint-disable-next-line no-undef
     while (restart && sim) {
       for (let i = 0; i < this.currentPosition.lanes.length; i++) {
@@ -89,6 +90,16 @@ class Vehicle {
           this.currentPosition.load[i] -= this.size
           // eslint-disable-next-line no-undef
           this.currentPosition.circle.fillColor = new Color(0, 0.8, 1, 0.7)
+
+          // eslint-disable-next-line no-undef
+          departures += 1
+          let departTime = new Date()
+
+          // eslint-disable-next-line no-undef
+          exitTimes += Math.abs(departTime - startTime)
+          // eslint-disable-next-line no-undef
+
+          carsQuantity += 1
 
           restart = false
         } else {
