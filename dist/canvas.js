@@ -201,9 +201,8 @@ function deleteNode (target) {
 }
 
 function fillProperties () {
-  document.getElementById('prop-id').innerHTML = lastNodeSelected.id
-  document.getElementById('prop-x').innerHTML = lastNodeSelected.x
-  document.getElementById('prop-y').innerHTML = lastNodeSelected.y
+  document.getElementById('prop-x').innerHTML = Math.floor(lastNodeSelected.x)
+  document.getElementById('prop-y').innerHTML = Math.floor(lastNodeSelected.y)
   document.getElementById('prop-lanes').innerHTML = lastNodeSelected.lanes.length
   document.getElementById('prop-load').innerHTML = JSON.stringify(lastNodeSelected.load)
   document.getElementById('prop-traffilight').innerHTML = lastNodeSelected.trafficLight.state
