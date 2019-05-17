@@ -27,7 +27,7 @@ Donde las calles son un conjunto de pares de segmentos relacionados con otro y n
 Los carriles están representados con colas en cada segmento de calle.
 Cada segmento de calle contiene una colección de colas donde cada una es una lista de vehículos sobre ese segmento en punto del tiempo. La cantidad de colas es determinada por el número de carriles que tenga y la capacidad de cada cola individual por la unidad de tamaño de los vehículos dentro de la colección.
 
-### Circlación
+### Circulación
 Los vehículos circulan a una determinada aceleración y velocidad máxima dependiendo del tipo que sean, y sólo continúan hacia la siguiente dirección en el grafo si hay espacio disponible. De no haber espacio o estar en un semáforo en rojo su velocidad regresa a cero y tiene que comenzar a acelerar otra vez cuando se desocupe la siguiente posición. Solo el primer carro en cada carril puede avanzar y desencolar, y cuando avanza a la siguiente posición va al final de la cola del siguiente carril.
 
 ## Saber más

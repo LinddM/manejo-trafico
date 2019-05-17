@@ -37,6 +37,7 @@ class Vehicle {
   async move () {
     let restart = true
     let startTime = new Date()
+    const startPos = [this.currentPosition.x, this.currentPosition.y]
     // eslint-disable-next-line no-undef
     while (restart && sim) {
       for (let i = 0; i < this.currentPosition.lanes.length; i++) {
@@ -107,8 +108,13 @@ class Vehicle {
 
           // eslint-disable-next-line no-undef
           exitTimes += Math.abs(departTime - startTime)
+          
+          const finishPos = [this.currentPosition.x, this.currentPosition.y]
+          const vector = [finishPos[0] - startPos[0], finishPos[1] - startPos[1]]
+          const distance = Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2))
           // eslint-disable-next-line no-undef
-
+          exitSpeeds += distance / (Math.abs(departTime - startTime) / 100)
+          // eslint-disable-next-line no-undef
           carsQuantity += 1
 
           restart = false
