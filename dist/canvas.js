@@ -9,6 +9,25 @@ const tool = new Tool()
 // Trray structure for all street nodes
 let streets = new Streets()
 
+// Generate graphViz code
+function generateGraphViz () {
+  const startDigraph = 'digraph G {subgraph cluster_0 {style=filled;color=lightgrey;node [style=filled,color=white];label = "Calle";'
+  const endDigraph = '}}'
+
+  let middleGraph = ''
+  for (let i = 0; i < streets.nodes.length; i++) {
+    if (streets.nodes[i].direction.length > 0) {
+      for (let o = 0; o < streets.nodes[i].direction.length; o++) {
+        middleGraph += `${streets.nodes[i].id} -> ${streets.nodes[i].direction[o].id};`
+      }
+    } else {
+      middleGraph += `${streets.nodes[i].id};`
+    }
+  }
+  const fullDigraph = `${startDigraph}${middleGraph}${endDigraph}`
+  return fullDigraph
+}
+
 // Checks if any circle is selected on the canvas
 let nodeSelected = false
 
