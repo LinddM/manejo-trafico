@@ -15,6 +15,13 @@ npm i
 ```
 2. Abrir index.html
 
+## Estructura de datos
+### Digrafo
+<img src="street.png" style="width:400px">
+
+### Clases
+<img src="UML.jpeg" style="width:500px">
+
 ## Simulador
 ### Calles
 El modelo de calles es un grafo dirigido, donde cada vértice son 4 metros de calle y las aristas es la dirección de ese segmento. El modelo de las calles se puede representar por:
